@@ -1,5 +1,24 @@
-here is our list single </br>
+<!-- listing.html -->
+<h2>Here is our list single</h2>
+<p>Name: {{ listing.name }} -- Price: {{ listing.price }}</p>
+<img src="{{ listing.image.url }}" width="400" height="300" alt="{{ listing.name }}">
+<a href="{% url 'delete' listing.id %}">Delete</a><br>
+<a href="{% url 'update' listing.id %}">Update</a>
+
+
+
+
+
+
+
+
+
+
+
+<!-- here is our list single </br>
 <P> Name: {{listing.name }} -- Price: {{ listing.price }}</P>
 <img src = '{{ listing.image.url }}' width="400" height="300"></img>
 <a href = '/delete{{ listing.id }}'>delete</a></br>
-<a href = '/update/{{ listing.id }}'>update</a>
+<a href = '/update/{{ listing.id }}'>update</a> --> -->
+
+

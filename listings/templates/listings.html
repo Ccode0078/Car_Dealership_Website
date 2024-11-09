@@ -1,4 +1,139 @@
-<p> Trusted Auto Houston </p>
+<head>
+
+</head>
+
+
+
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<h1>All Car Listings</h1>
+{% for listing in listings %}
+    <div>
+        <h2>{{ listing.name }}</h2>
+        <p>Price: {{ listing.price }}</p>
+        <p>Details: {{ listing.description }}</p>
+        <p>Milage:  {{ listing.milage }}</p>
+        <p> ID: {{ listing.id }} </p>
+        <img src="{{ listing.image.url }}" alt="{{ listing.name }}" width="400" height="300" />
+        <form method='POST'>
+            {% csrf_token %}
+        {{ form.as_p }}
+        </form>
+    </div>
+{% empty %}
+    <p>No listings available.</p>
+{% endfor %}
+<div class="button-box" style="display: inline-block; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+    <a href="/create" class="btn btn-primary">Add vehicles</a> -->
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- shows listing with image -->
+<!-- % extends "base_generic.html" %}
+
+{% block content %}
+<h1>All vehicles</h1>
+<div class="listing-container">
+    {% for listing in listings %}
+        <div class="listing">
+            <img src="{{ listing.image.url }}" alt="Image of {{ listing.name }}" width="400" height="300">
+            <p>Name: {{ listing.name }}</p>
+            <p>Price: ${{ listing.price }}</p>
+        </div>
+    {% endfor %}
+    <a href="/create">Add new listing</a> -->
+<!-- </div>
+{% endblock %}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
+
+  <div class="box" style="background-color: black; padding: 10px;">
+    <a href="{% url 'index' %}">Home</a>
+  </div>
+
+  <p>Trusted Auto Houston</p>
+  <p>Welcome, here is our vehicles</p>
+
+  {% for listing in listings %}
+    <ul>
+      <li><a href="listing/{{ listing.id }}">{{ listing }}</a></li>
+    </ul>
+  {% endfor %}
+
+  <a href="/create">Add new listing</a> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <p> Trusted Auto Houston </p>
 <p>Welcome, here is our vehicles</p>
 
 {% for listing in listings %}
@@ -8,3 +143,5 @@
 </ul>
 {% endfor %}
 <a href = '/create'>Add new listing</a>
+<ul>
+<a href = '/index'>Home</a>   -->
