@@ -1,42 +1,103 @@
-<head>
-
-</head>
-
-
-
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Listings</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <div id='navbar-placeholder'></div>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script> document.addEventListener("DOMContentLoaded", function () {
+            fetch('/static/nav_bar.html')
+                .then(response => response.text())
+                .then(data => { document.getElementById('navbar-placeholder').innerHTML = data; });
+        }); </script>
+    <style>
+
+    </style>
 </head>
 
-<h1>All Car Listings</h1>
-{% for listing in listings %}
-    <div>
-        <h2>{{ listing.name }}</h2>
-        <p>Price: {{ listing.price }}</p>
-        <p>Details: {{ listing.description }}</p>
-        <p>Milage:  {{ listing.milage }}</p>
-        <p> ID: {{ listing.id }} </p>
-        <img src="{{ listing.image.url }}" alt="{{ listing.name }}" width="400" height="300" />
-        <form method='POST'>
-            {% csrf_token %}
-        {{ form.as_p }}
-        </form>
+<body>
+    <div class="container-fluid">
+        <h1 style="color:white">All Car Listings</h1>
+        <div class="row"> {% for listing in listings %} <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+                <div class="card h-100 custom card"
+                    style="background: linear-gradient(0deg, rgb(237, 237, 236) 0%, rgba(212, 207, 195, 0.5) 100%) !important;  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);">
+                    <a href="{% url 'car_details' listing.id %}"> <img src="{{ listing.image.url }}"
+                            class="card-img-top" alt="{{ listing.name }}" style="height: 200px; object-fit: cover;">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ listing.name }}</h5>
+                        <p class="card-text">Price: {{ listing.price }}</p>
+                        <p class="card-text">Details: {{ listing.description }} </p>
+                        <p class="card-text">Mileage: {{ listing.milage }}</p>
+                    </div>
+                </div>
+            </div> {% empty %} <p>No listings available</p> {% endfor %} </div>
     </div>
-{% empty %}
-    <p>No listings available.</p>
-{% endfor %}
-<div class="button-box" style="display: inline-block; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
-    <a href="/create" class="btn btn-primary">Add vehicles</a> -->
-</div>
+    <div class="button-box"
+        style="display: inline-block; padding: 10px; border:1px solid rgb(228, 228, 228); border-radius: 8px;">
+        <style> </style> <a href="/create" class="vehicles-btn">Add vehicles</a>
+    </div>
+    <style>
+        body {
+            background-color: #161616;
+            ;
+        }
+
+        .vehicles-btn,
+        .member-btn {
+            background: #F85A16;
+            color: #fff;
+            border: 2px solid #F85A16;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .vehicles-btn:hover,
+        .member-btn:hover,
+        .btn-primary {
+            background: #d94c14;
+            border-color: #d94c14;
+        }
+
+        a {
+            color: grey;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #d94c14;
+            text-decoration: none;
+        }
+
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</body>
+
+<div id="footer"></div>
+<script> fetch('/static/footer.html').then(res => { if (!res.ok) { throw new Error(`HTTP error! status: ${res.status}`); } return res.text(); }).then(html => { document.getElementById('footer').innerHTML = html; }).catch(err => { console.error('Error loading footer:', err); }); </script>
+
+</html>
 
 
 
-
-
-
-</div>
 
 
 
@@ -91,7 +152,6 @@
 
 
 
-<!-- 
 
 
 
