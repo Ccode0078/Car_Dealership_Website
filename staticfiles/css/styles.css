@@ -259,12 +259,13 @@ h1 {
   margin: 10vh;
 }
 
+/* listings.html card */
 .card {
   border: none;
   transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
   overflow: hidden;
   border-radius: 20px;
-  min-height: 450px;
+  min-height: 150px;
   box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -311,8 +312,8 @@ h1 {
 
 .card.card-has-bg:hover .card-img-overlay {
   transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-  background: rgb(202, 145, 19);
-  background: linear-gradient(0deg, rgba(255, 186, 33, 0.5) 0%, rgba(255, 186, 33, 1) 100%);
+  /* background: rgb(202, 145, 19);
+  background: linear-gradient(0deg, rgba(255, 186, 33, 0.5) 0%, rgba(255, 186, 33, 1) 100%); */
 }
 
 .card-footer {
@@ -361,6 +362,7 @@ h1 {
   background: linear-gradient(0deg, rgba(255, 186, 33, 0.5) 0%, rgba(255, 186, 33, 1) 100%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+
 }
 
 .custom-card:hover {
@@ -370,3 +372,6 @@ h1 {
 }
 
 /* car_details Page */
+
+
+

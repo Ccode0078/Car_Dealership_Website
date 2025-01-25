@@ -1,6 +1,45 @@
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Listing</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'listings/css/styles.css' %}">
+</head>
+<body>
+    <style>
+        body {
+            background-color: antiquewhite;
+        }
+    </style>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <label for="extra_images">Additional Images:</label>
+        <input type="file" name="extra_images" multiple>
+        <button type="submit">Save</button>
+    </form>
+
     <img src="{{ car.image.url }}" alt="Car Image">
-    <button type="submit">Save</button>
-</form>
+
+    <div class="img-select">
+        {% if images %}
+            <p>Found {{ images.count }} images.</p> <!-- Debugging line -->
+            {% for image in images %}
+            <div class="img-item">
+                <a href="#" data-id="{{ forloop.counter }}">
+                    <img src="{{ image.image.url }}" alt="car image">
+                </a>
+                <p>Image URL: {{ image.image.url }}</p> <!-- Debugging line -->
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No additional images found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+
+
+

@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Listing
-from .forms import ListingForm
+from django.shortcuts import render, redirect,get_object_or_404
+from .forms import ListingForm, ImageForm
+from .models import Listing, Image
 
 # Query request from model       
 def listings(request):
@@ -16,27 +16,62 @@ def listing(request, id):
     context = {'listing': listing}
     return render(request, 'listing.html', context)
 
-# Function to create a new listing
-def create(request):
-    form = ListingForm()
+
+
+
+def create_listing(request):
     if request.method == 'POST':
-        form = ListingForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-    context = {'form': form}
-    return render(request, 'create.html', context)
+        listing_form = ListingForm(request.POST, request.FILES)
+        if listing_form.is_valid():
+            listing = listing_form.save()
+            print(f"Listing created: {listing.name}")
+            for file in request.FILES.getlist('images'):
+                print(f"Handling file: {file.name}")  # Debugging print statement
+                try:
+                    image_instance = Image.objects.create(listing=listing, image=file)
+                    print(f"Image saved: {image_instance.image.url}")  # Debugging print statement
+                except Exception as e:
+                    print(f"Error saving file {file.name}: {e}")  # Error debugging
+            return redirect('listing_detail', id=listing.id)
+        else:
+            print("Form is not valid")  # Debugging print statement
+    else:
+        listing_form = ListingForm()
+        print("GET request")  # Debugging print statement
+    return render(request, 'create_listing.html', {
+        'listing_form': listing_form,
+    })
+
+
+
+
+
+
+
+
+
+
+
 
 def update(request, id):
-    listing = Listing.objects.get(id=id)
-    form = ListingForm(instance=listing)
+    listing = get_object_or_404(Listing, id=id)
     if request.method == 'POST':
-        form = ListingForm(request.POST, instance=listing, files=request.FILES)
+        form = ListingForm(request.POST, request.FILES, instance=listing)
         if form.is_valid():
             form.save()
-            return redirect('/')
-    context = {'form': form}
+            # Handling extra images
+            images = request.FILES.getlist('extra_images')
+            for image in images:
+                Image.objects.create(listing=listing, image=image)
+            return redirect('update', id=listing.id)
+    else:
+        form = ListingForm(instance=listing)
+    context = {'form': form, 'car': listing, 'images': listing.images.all()}
     return render(request, 'update.html', context)
+
+
+
+
 
 # Function to remove a listing
 def delete(request, id):
@@ -57,11 +92,15 @@ def Vehicles(request):
     context = {'listings': listings}
     return render(request, 'vehicle.html', context)
 
+
 def listing_detail(request, id):
     print(f"Accessed listing with ID: {id}")
     listing = get_object_or_404(Listing, id=id)
     images = listing.images.all()
-    return render(request, 'listing.html', {'listing': listing, 'images': images})
+    for image in images:
+        print(f"Image: {image.image.url}")  # Debugging print statement
+    return render(request, 'car_details.html', {'car': listing, 'images': images})
+
 
 
 
@@ -71,7 +110,8 @@ def listing_detail(request, id):
 
 def car_details(request, pk):
     listing = get_object_or_404(Listing, pk=pk)
-    return render(request, 'car_details.html', {'car': listing})
+    images = listing.images.all()
+    return render(request, 'car_details.html', {'car': listing, 'images':images})
 
 
 def carousel_test(request):

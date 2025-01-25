@@ -11,21 +11,31 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+
     <div id='navbar-placeholder'></div>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
     <script> document.addEventListener("DOMContentLoaded", function () {
             fetch('/static/nav_bar.html')
                 .then(response => response.text())
                 .then(data => { document.getElementById('navbar-placeholder').innerHTML = data; });
         }); </script>
-    <style>
 
-    </style>
 </head>
+
+<!-- Hero image -->
+
+<body>
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1 class="typewriter"> Explore Our Latest Models </h1>
+        </div>
+    </div>
+</body>
 
 <body>
     <div class="container-fluid">
-        <h1 style="color:white">All Car Listings</h1>
+        <h1 style="color:white"></h1>
         <div class="row"> {% for listing in listings %} <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
                 <div class="card h-100 custom card"
                     style="background: linear-gradient(0deg, rgb(237, 237, 236) 0%, rgba(212, 207, 195, 0.5) 100%) !important;  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);">
@@ -34,17 +44,17 @@
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">{{ listing.name }}</h5>
-                        <p class="card-text">Price: {{ listing.price }}</p>
-                        <p class="card-text">Details: {{ listing.description }} </p>
-                        <p class="card-text">Mileage: {{ listing.milage }}</p>
+                        <p class="card-text">Model: {{ listing.brand }} </p>
+                        <p class="card-text">Milage: {{ listing.milage}}</p>
+
                     </div>
                 </div>
             </div> {% empty %} <p>No listings available</p> {% endfor %} </div>
     </div>
-    <div class="button-box"
+    <!-- <div class="button-box"
         style="display: inline-block; padding: 10px; border:1px solid rgb(228, 228, 228); border-radius: 8px;">
         <style> </style> <a href="/create" class="vehicles-btn">Add vehicles</a>
-    </div>
+    </div> -->
     <style>
         body {
             background-color: #161616;
@@ -79,10 +89,12 @@
             text-decoration: none;
         }
 
-        .card {
+        .custom-card {
             border-radius: 10px;
             overflow: hidden;
             transition: transform 0.2s;
+            min-height: 150px;
+
         }
 
         .card:hover {

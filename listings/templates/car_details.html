@@ -1,136 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Car Details</title>
+    <title>{{ car.name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'listings/css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+        crossorigin="anonymous">
 </head>
+<style>
+    @media screen and (min-width: 992px) {
+        .card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 1.5rem;
+        }
+
+        .card-wrapper {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-imgs {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product-content {
+            padding-top: 0;
+        }
+
+
+    }
+</style>
+<div id='navbar-placeholder'></div>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<script> document.addEventListener("DOMContentLoaded", function () {
+        fetch('/static/nav_bar.html')
+            .then(response => response.text())
+            .then(data => { document.getElementById('navbar-placeholder').innerHTML = data; });
+    }); </script>
+
 <body>
-    
     <div class="card-wrapper">
-      <div class="card">
-        <!-- card left -->
-        <div class="product-imgs">
-          <div class="img-display">
-            <div class="img-showcase">
-              <img src="{{ car.image.url }}" alt="car image">
-              <img src="{{ listing.image.url }}" alt="car image">
-              <img src="{{ listing.image.url }}" alt="car image">
-            </div>
-          </div>
-          <div class="img-select">
-            <div class="img-item">
-              <a href="#" data-id="1">
-                <img src="{% static 'car_images/2015_Chevrolet_Silverado_2500/image2.png' %}" alt="car image">
+        <div class="card">
+            <!-- card left -->
+            <div class="product-imgs">
+                <div class="img-display">
+                    <div class="img-showcase">
+                        <img src="{{ car.image.url }}" alt="car image">
+                        {% for image in images %}
+                        <img src="{{ image.image.url }}" alt="car image">
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="img-select">
+                    <div class="img-item">
+                        <a href="" data-id="0">
+                            <img src="{{ car.image.url }}" alt="car image">
+                        </a>
+                    </div>
+                    {% for image in images %}
 
-              </a>
+                    <div class="img-item">
+                        <a href="" data-id="{{ forloop.counter }}">
+                            <img src="{{ image.image.url }}" alt="car image">
+                        </a>
+                    </div>
+
+                    {% endfor %}
+                </div>
             </div>
-            <div class="img-item">
-              <a href="#" data-id="2">
-                <img src="{{ listing.image.url }}" alt="car image">
-              </a>
+            <!-- card right -->
+            <div class="product-content">
+                <h2 class="product-title">{{ car.name }}</h2>
+                <div class="product-price">
+                    <p class="new-price">Price: <span>${{ car.price }}</span></p>
+                </div>
+                <div class="product-detail">
+                    <h2>About this car:</h2>
+                    <p>{{ car.description }}</p>
+                    <ul>
+                        <li>Brand: <span>{{ car.brand }}</span></li>
+                        <li>Mileage: <span>{{ car.milage }}</span></li>
+                    </ul>
+                </div>
+                <div class="purchase-info">
+                    <input type="number" min="1" value="1">
+                    <button type="button" class="btn">
+                        Add to Cart <i class="fas fa-shopping-cart"></i>
+                    </button>
+                    <button type="button" class="btn">Compare</button>
+                </div>
+                <div class="social-links">
+                    <p>Share At:</p>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
             </div>
-            <div class="img-item">
-              <a href="#" data-id="3">
-                <img src="{{ listing.image.url }}" alt="car image">
-              </a>
-            </div>
-            <div class="img-item">
-              <a href="#" data-id="4">
-                <img src="{{ listing.image.url }}" alt="car image">
-              </a>
-            </div>
-          </div>
         </div>
-        <!-- card right -->
-        <div class="product-content">
-          <h2 class="product-title">{{ car.name }}</h2>
-
-          <div class="product-price">
-            <p class="new-price">Price: <span>${{  car.price }}</span></p>
-          </div>
-
-          <div class="product-detail">
-            <h2>About this car:</h2>
-            <p>{{ car.description }}</p>
-            <ul>
-              <li>Brand: <span>{{ car.brand }}</span></li>
-              <li>Milage: <span>{{ car.milage }} miles</span></li>
-            </ul>
-          </div>
-
-          <div class="purchase-info">
-            <input type="number" min="1" value="1">
-            <button type="button" class="btn">
-              Add to Cart <i class="fas fa-shopping-cart"></i>
-            </button>
-            <button type="button" class="btn">Compare</button>
-          </div>
-
-          <div class="social-links">
-            <p>Share At:</p>
-            <a href="#">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-pinterest"></i>
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
-
     <script src="{% static 'listings/js/script.js' %}"></script>
+    <div id="footer"></div>
+    <script> fetch('/static/footer.html').then(res => { if (!res.ok) { throw new Error(`HTTP error! status: ${res.status}`); } return res.text(); }).then(html => { document.getElementById('footer').innerHTML = html; }).catch(err => { console.error('Error loading footer:', err); }); </script>
 
-
-</body>
 </html>
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <body>
-    <div>
-        <h1>{{ car.name }}</h1>
-        <div class="d-flex justify-content-center">
-            <div>
-                <img src="{{ car.image.url }}" alt="{{ car.name }}" class="img-fluid">
-                <p>Price: {{ car.price }}</p>
-                <p>Details: {{ car.description }}</p>
-                <p>Milage: {{ car.milage }}</p>
-            </div>
-        </div>
-    </div>
-</body> -->
