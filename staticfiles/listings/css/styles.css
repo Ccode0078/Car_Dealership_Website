@@ -352,7 +352,7 @@ h1 {
   background: linear-gradient(0deg, rgba(255, 186, 33, 0.3785889355742297) 0%, rgba(255, 186, 33, 1) 100%);
 }
 /* listings card style */
-.custom-card {
+.card custom-card {
   background: rgb(202, 145, 19);
   background: linear-gradient(0deg, rgba(255, 186, 33, 0.5) 0%, rgba(255, 186, 33, 1) 100%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
