@@ -1,4 +1,6 @@
-Welcome to Trusted Auto Houston..
+Trusted Auto - Car Dealership Webstie
+
+A dynamic car dealership website with an inventory of vehicles for sale!
 
 ![image Alt](https://github.com/Ccode0078/Car_Dealership_Website/blob/c67bd8d9203a93da1c1a8878aa02b20b5df616b6/Screen%20Shot%202025-03-19%20at%2012.52.11%20AM.png)
 ![image Alt](https://github.com/Ccode0078/Car_Dealership_Website/blob/17df10c20312c6b4d27153b1b3a9a7f07288fac8/Screen%20Shot%202025-03-19%20at%2012.53.18%20AM.png)
