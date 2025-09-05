@@ -422,3 +422,6 @@ html {
   50% { border-color: rgb(255, 255, 255); }
 }
 
+body.index-page {
+  background: #000;
+}
