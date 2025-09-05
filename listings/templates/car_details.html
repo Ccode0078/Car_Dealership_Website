@@ -1,122 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ car.name }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'listings/css/styles.css' %}">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-        crossorigin="anonymous">
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ car.name }}</title>
+
+  <!-- Bootstrap 4 (jsDelivr, no SRI to avoid mismatches) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" />
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
+  
+  <link rel="stylesheet" href="{% static 'listings/css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  <style>
+    body { padding-top:56px; background:#161616; }
+    .page { background:#fff; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,.15); }
+    .main-img { width:100%; height:auto; border-radius:8px; }
+    .thumbs img { height:70px; width:70px; object-fit:cover; border-radius:6px; cursor:pointer; }
+    .thumbs img.active { outline:3px solid #007bff; }
+    .price { font-size:1.25rem; font-weight:600; }
+    .muted { color:#6c757d; }
+  </style>
 </head>
-<style>
-    @media screen and (min-width: 992px) {
-        .card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap: 1.5rem;
-        }
-
-        .card-wrapper {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .product-imgs {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .product-content {
-            padding-top: 0;
-        }
-
-
-    }
-</style>
-<div id='navbar-placeholder'></div>
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
-<script> document.addEventListener("DOMContentLoaded", function () {
-        fetch('/static/nav_bar.html')
-            .then(response => response.text())
-            .then(data => { document.getElementById('navbar-placeholder').innerHTML = data; });
-    }); </script>
 
 <body>
-    <div class="card-wrapper">
-        <div class="card">
-            <!-- card left -->
-            <div class="product-imgs">
-                <div class="img-display">
-                    <div class="img-showcase">
-                        <img src="{{ car.image.url }}" alt="car image">
-                        {% for image in images %}
-                        <img src="{{ image.image.url }}" alt="car image">
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="img-select">
-                    <div class="img-item">
-                        <a href="" data-id="0">
-                            <img src="{{ car.image.url }}" alt="car image">
-                        </a>
-                    </div>
-                    {% for image in images %}
+  
+  <div id="navbar-placeholder"></div>
 
-                    <div class="img-item">
-                        <a href="" data-id="{{ forloop.counter }}">
-                            <img src="{{ image.image.url }}" alt="car image">
-                        </a>
-                    </div>
+  <div class="container my-4">
+    <div class="page p-3 p-md-4">
+      <div class="row">
+        <!-- LEFT: images -->
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <img id="mainImg" class="main-img"
+               src="{{ car.image.url }}"
+               alt="{{ car.name }}">
 
-                    {% endfor %}
-                </div>
-            </div>
-            <!-- card right -->
-            <div class="product-content">
-                <h2 class="product-title">{{ car.name }}</h2>
-                <div class="product-price">
-                    <p class="new-price">Price: <span>${{ car.price }}</span></p>
-                </div>
-                <div class="product-detail">
-                    <h2>About this car:</h2>
-                    <p>{{ car.description }}</p>
-                    <ul>
-                        <li>Brand: <span>{{ car.brand }}</span></li>
-                        <li>Mileage: <span>{{ car.milage }}</span></li>
-                    </ul>
-                </div>
-                <div class="purchase-info">
-                    <input type="number" min="1" value="1">
-                    <button type="button" class="btn">
-                        Add to Cart <i class="fas fa-shopping-cart"></i>
-                    </button>
-                    <button type="button" class="btn">Compare</button>
-                </div>
-                <div class="social-links">
-                    <p>Share At:</p>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#"><i class="fab fa-pinterest"></i></a>
-                </div>
-            </div>
+          <div class="thumbs d-flex flex-wrap mt-3">
+            <img class="mr-2 mb-2 active"
+                 src="{{ car.image.url }}"
+                 alt="thumb 0"
+                 data-full="{{ car.image.url }}">
+            {% for image in images %}
+              <img class="mr-2 mb-2"
+                   src="{{ image.image.url }}"
+                   alt="thumb {{ forloop.counter }}"
+                   data-full="{{ image.image.url }}">
+            {% endfor %}
+          </div>
         </div>
-    </div>
-    <script src="{% static 'listings/js/script.js' %}"></script>
-    <div id="footer"></div>
-    <script> fetch('/static/footer.html').then(res => { if (!res.ok) { throw new Error(`HTTP error! status: ${res.status}`); } return res.text(); }).then(html => { document.getElementById('footer').innerHTML = html; }).catch(err => { console.error('Error loading footer:', err); }); </script>
 
+        <!-- RIGHT: content -->
+        <div class="col-lg-6">
+          <h1 class="h3 mb-2">{{ car.name }}</h1>
+          <div class="price text-primary mb-3">${{ car.price }}</div>
+
+          <p class="mb-3">{{ car.description }}</p>
+
+          <ul class="list-unstyled mb-4">
+            <li><span class="muted">Brand:</span> {{ car.brand }}</li>
+            <li><span class="muted">Mileage:</span> {{ car.milage }}</li>
+          </ul>
+
+          <div class="d-flex align-items-center mb-4">
+            <input id="qty" type="number" min="1" value="1" class="form-control" style="max-width:100px;">
+            <button class="btn btn-primary ml-2">
+              <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+            </button>
+            <button class="btn btn-outline-secondary ml-2">Compare</button>
+          </div>
+
+          <div>
+            <span class="muted mr-2">Share:</span>
+            <a href="#" class="text-dark mr-2"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-dark mr-2"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-dark mr-2"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-dark mr-2"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="text-dark"><i class="fab fa-pinterest"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div id="footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+
+  <script>
+    (function () {
+      var main = document.getElementById('mainImg');
+      if (!main) return;
+      document.querySelectorAll('.thumbs img').forEach(function (thumb) {
+        thumb.addEventListener('click', function (e) {
+          e.preventDefault();
+          var full = this.getAttribute('data-full') || this.src;
+          main.src = full;
+          document.querySelectorAll('.thumbs img').forEach(function (t) { t.classList.remove('active'); });
+          this.classList.add('active');
+        });
+      });
+    })();
+  </script>
+
+  <!-- Load navbar/footer via Django static -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("{% static 'nav_bar.html' %}")
+        .then(r => r.ok ? r.text() : Promise.reject(r.status))
+        .then(html => { document.getElementById('navbar-placeholder').innerHTML = html; })
+        .catch(err => console.error('Navbar load error:', err));
+
+      fetch("{% static 'footer.html' %}")
+        .then(r => r.ok ? r.text() : Promise.reject(r.status))
+        .then(html => { document.getElementById('footer').innerHTML = html; })
+        .catch(err => console.error('Footer load error:', err));
+    });
+  </script>
+</body>
 </html>
+
+
+
+

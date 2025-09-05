@@ -1,29 +1,37 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
-
 <head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'listings/css/styles.css' %}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Trusted auto Houston{% endblock %}</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    {% block css %}{% endblock %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% block title %}Trusted auto Houston{% endblock %}</title>
+
+  <!-- Your app CSS (Option A path) -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  <!-- Bootstrap 4.6.2 CSS (no integrity while debugging) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+  {% block css %}{% endblock %}
 </head>
-
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                {% block index %}{% endblock %}
-            </div>
-        </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    {% block js %}{% endblock %}
+  {% block index %}{% endblock %}
+
+  <!-- ORDER MATTERS for BS4: jQuery FIRST, then Bootstrap bundle (includes Popper 1.x) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  {% block js %}{% endblock %}
 </body>
-
 </html>
+
+
+
+
+
+
+
+
+

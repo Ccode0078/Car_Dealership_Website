@@ -1,219 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Listings</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Car Listings</title>
 
+  <!-- Bootstrap 4.5.2 CSS (SRI) -->
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+        crossorigin="anonymous">
 
-    <div id='navbar-placeholder'></div>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <!-- App CSS -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
-    <script> document.addEventListener("DOMContentLoaded", function () {
-            fetch('/static/nav_bar.html')
-                .then(response => response.text())
-                .then(data => { document.getElementById('navbar-placeholder').innerHTML = data; });
-        }); </script>
+  <style>
+    /* Layout + theme */
+    body { background-color:#161616; padding-top:56px; } /* for fixed-top navbar */
+    .text-light-50 { color: rgba(255,255,255,.75) !important; }
+    .text-light-50:hover { color:#fff !important; text-decoration:none; }
 
+    /* Cards */
+    .custom-card { border-radius:10px; overflow:hidden; transition:transform .2s; min-height:150px; }
+    .card:hover { transform:scale(1.05); }
+
+    /* Buttons (optional) */
+    .vehicles-btn, .member-btn {
+      background:#F85A16; color:#fff; border:2px solid #F85A16;
+      text-decoration:none; padding:10px 20px; border-radius:4px; display:inline-block;
+    }
+    .vehicles-btn:hover, .member-btn:hover, .btn-primary { background:#d94c14; border-color:#d94c14; }
+  </style>
 </head>
 
-<!-- Hero image -->
+<!-- Flex column keeps footer at bottom naturally -->
+<body class="d-flex flex-column min-vh-100">
+  <!-- NAVBAR (injected into placeholder at the very top) -->
+  <div id="navbar-placeholder"></div>
 
-<body>
+  <!-- MAIN CONTENT -->
+  <main class="flex-fill">
+    <!-- Hero -->
     <div class="hero-image">
-        <div class="hero-text">
-            <h1 class="typewriter"> Explore Our Latest Models </h1>
-        </div>
+      <div class="hero-text">
+        <h1 class="typewriter">Explore Our Latest Models</h1>
+      </div>
     </div>
-</body>
 
-<body>
+    <!-- Listings -->
     <div class="container-fluid">
-        <h1 style="color:white"></h1>
-        <div class="row"> {% for listing in listings %} <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
-                <div class="card h-100 custom card"
-                    style="background: linear-gradient(0deg, rgb(237, 237, 236) 0%, rgba(212, 207, 195, 0.5) 100%) !important;  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);">
-                    <a href="{% url 'car_details' listing.id %}"> <img src="{{ listing.image.url }}"
-                            class="card-img-top" alt="{{ listing.name }}" style="height: 200px; object-fit: cover;">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ listing.name }}</h5>
-                        <p class="card-text">Model: {{ listing.brand }} </p>
-                        <p class="card-text">Milage: {{ listing.milage}}</p>
-
-                    </div>
-                </div>
-            </div> {% empty %} <p>No listings available</p> {% endfor %} </div>
+      <div class="row">
+        {% for listing in listings %}
+          <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+            <div class="card h-100 custom-card"
+                 style="background: linear-gradient(0deg, rgb(237,237,236) 0%, rgba(212,207,195,0.5) 100%) !important; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+              <a href="{% url 'car_details' listing.id %}">
+                <img src="{{ listing.image.url }}" class="card-img-top" alt="{{ listing.name }}" style="height:200px; object-fit:cover;">
+              </a>
+              <div class="card-body">
+                <h5 class="card-title">{{ listing.name }}</h5>
+                <p class="card-text">Model: {{ listing.brand }}</p>
+                <p class="card-text">Mileage: {{ listing.milage }}</p>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <p class="text-light pl-3">No listings available</p>
+        {% endfor %}
+      </div>
     </div>
-    <!-- <div class="button-box"
-        style="display: inline-block; padding: 10px; border:1px solid rgb(228, 228, 228); border-radius: 8px;">
-        <style> </style> <a href="/create" class="vehicles-btn">Add vehicles</a>
-    </div> -->
-    <style>
-        body {
-            background-color: #161616;
-            ;
-        }
+  </main>
 
-        .vehicles-btn,
-        .member-btn {
-            background: #F85A16;
-            color: #fff;
-            border: 2px solid #F85A16;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            display: inline-block;
-        }
+  <!-- FOOTER (injected, not a navbar) -->
+  <div id="footer"></div>
 
-        .vehicles-btn:hover,
-        .member-btn:hover,
-        .btn-primary {
-            background: #d94c14;
-            border-color: #d94c14;
-        }
+  <!-- JS: jQuery -> Popper v1 -> Bootstrap v4 (SRI) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+          integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+          crossorigin="anonymous"></script>
 
-        a {
-            color: grey;
-            text-decoration: none;
-        }
+  <!-- Inject navbar + footer fragments from static -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Navbar (should contain a Bootstrap fixed-top navbar)
+      fetch("{% static 'nav_bar.html' %}")
+        .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+        .then(html => { document.getElementById('navbar-placeholder').innerHTML = html; })
+        .catch(err => console.error('Error loading navbar:', err));
 
-        a:hover {
-            color: #d94c14;
-            text-decoration: none;
-        }
-
-        .custom-card {
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.2s;
-            min-height: 150px;
-
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-        }
-    </style>
+      // Footer (use a real footer structure, not a fixed-bottom navbar)
+      fetch("{% static 'footer.html' %}")
+        .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+        .then(html => { document.getElementById('footer').innerHTML = html; })
+        .catch(err => console.error('Error loading footer:', err));
+    });
+  </script>
 </body>
-
-<div id="footer"></div>
-<script> fetch('/static/footer.html').then(res => { if (!res.ok) { throw new Error(`HTTP error! status: ${res.status}`); } return res.text(); }).then(html => { document.getElementById('footer').innerHTML = html; }).catch(err => { console.error('Error loading footer:', err); }); </script>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- shows listing with image -->
-<!-- % extends "base_generic.html" %}
-
-{% block content %}
-<h1>All vehicles</h1>
-<div class="listing-container">
-    {% for listing in listings %}
-        <div class="listing">
-            <img src="{{ listing.image.url }}" alt="Image of {{ listing.name }}" width="400" height="300">
-            <p>Name: {{ listing.name }}</p>
-            <p>Price: ${{ listing.price }}</p>
-        </div>
-    {% endfor %}
-    <a href="/create">Add new listing</a> -->
-<!-- </div>
-{% endblock %}
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <div class="box" style="background-color: black; padding: 10px;">
-    <a href="{% url 'index' %}">Home</a>
-  </div>
-
-  <p>Trusted Auto Houston</p>
-  <p>Welcome, here is our vehicles</p>
-
-  {% for listing in listings %}
-    <ul>
-      <li><a href="listing/{{ listing.id }}">{{ listing }}</a></li>
-    </ul>
-  {% endfor %}
-
-  <a href="/create">Add new listing</a> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <p> Trusted Auto Houston </p>
-<p>Welcome, here is our vehicles</p>
-
-{% for listing in listings %}
-<ul>
-
-<li> <a href ='listing/{{ listing.id }}'>  {{listing}}</a> </li>
-</ul>
-{% endfor %}
-<a href = '/create'>Add new listing</a>
-<ul>
-<a href = '/index'>Home</a>   -->
