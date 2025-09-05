@@ -6,26 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Car Listings</title>
 
-  <!-- Bootstrap 4.5.2 CSS (SRI) -->
-  <link rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-        crossorigin="anonymous">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
 
-  <!-- App CSS -->
+  
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
   <style>
-    /* Layout + theme */
-    body { background-color:#161616; padding-top:56px; } /* for fixed-top navbar */
-    .text-light-50 { color: rgba(255,255,255,.75) !important; }
-    .text-light-50:hover { color:#fff !important; text-decoration:none; }
+    /* Page theme + layout */
+    body { background-color:#161616; padding-top:56px; } 
+    main.flex-grow-1 { display:block; }
+    footer.site-footer { background:#0f0f0f; color:#d9d9d9; }
+    footer.site-footer a { color:#d9d9d9; text-decoration:none; }
+    footer.site-footer a:hover { color:#fff; text-decoration:none; }
+    footer.site-footer ul { margin:0; padding-left:0; list-style:none; }
 
     /* Cards */
     .custom-card { border-radius:10px; overflow:hidden; transition:transform .2s; min-height:150px; }
     .card:hover { transform:scale(1.05); }
 
-    /* Buttons (optional) */
+   
     .vehicles-btn, .member-btn {
       background:#F85A16; color:#fff; border:2px solid #F85A16;
       text-decoration:none; padding:10px 20px; border-radius:4px; display:inline-block;
@@ -34,13 +34,14 @@
   </style>
 </head>
 
-<!-- Flex column keeps footer at bottom naturally -->
+
 <body class="d-flex flex-column min-vh-100">
-  <!-- NAVBAR (injected into placeholder at the very top) -->
+
+  
   <div id="navbar-placeholder"></div>
 
-  <!-- MAIN CONTENT -->
-  <main class="flex-fill">
+ 
+  <main class="flex-grow-1">
     <!-- Hero -->
     <div class="hero-image">
       <div class="hero-text">
@@ -49,7 +50,7 @@
     </div>
 
     <!-- Listings -->
-    <div class="container-fluid">
+    <div class="container-fluid py-4">
       <div class="row">
         {% for listing in listings %}
           <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
@@ -66,41 +67,41 @@
             </div>
           </div>
         {% empty %}
-          <p class="text-light pl-3">No listings available</p>
+          <div class="col-12">
+            <p class="text-light pl-3 mb-0">No listings available</p>
+          </div>
         {% endfor %}
       </div>
     </div>
   </main>
 
-  <!-- FOOTER (injected, not a navbar) -->
-  <div id="footer"></div>
+ 
+  <footer id="footer" class="site-footer mt-auto"></footer>
 
-  <!-- JS: jQuery -> Popper v1 -> Bootstrap v4 (SRI) -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-          crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-          integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-          crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-          crossorigin="anonymous"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Inject navbar + footer fragments from static -->
+  
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Navbar (should contain a Bootstrap fixed-top navbar)
       fetch("{% static 'nav_bar.html' %}")
         .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
         .then(html => { document.getElementById('navbar-placeholder').innerHTML = html; })
-        .catch(err => console.error('Error loading navbar:', err));
+        .catch(err => console.error('Navbar load error:', err));
 
-      // Footer (use a real footer structure, not a fixed-bottom navbar)
+      
       fetch("{% static 'footer.html' %}")
         .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
-        .then(html => { document.getElementById('footer').innerHTML = html; })
-        .catch(err => console.error('Error loading footer:', err));
+        .then(html => {
+          const el = document.getElementById('footer');
+          el.innerHTML = html;
+     
+          el.querySelectorAll('ul').forEach(ul => { ul.classList.add('list-unstyled'); });
+        })
+        .catch(err => console.error('Footer load error:', err));
     });
   </script>
 </body>
 </html>
+
